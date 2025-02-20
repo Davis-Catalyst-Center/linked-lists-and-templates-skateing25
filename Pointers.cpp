@@ -1,22 +1,14 @@
 #include <iostream>
 #include <string>
+#include "student.h"
 using namespace std;
 
 
-class cool{
-public:
-string food; 
-  string* ptr;
-};
+
+
 int main() {
-  
-cool u;
- u.food="i";
- u.ptr= = &food;
-  cout << food << "\n";
-
-  cout << &food << "\n";
-
-  cout << ptr << "\n";
+ student* student1 = new student("John", 20, 'A');
+  cout << *student1 << endl;
+  cout << student1;
   return 0;
 }
