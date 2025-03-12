@@ -25,17 +25,23 @@ struct memberNode
 };
 class student_Group{
 private: 
-memberNode* head;
-memberNode* tail;
+    memberNode* head;
+    memberNode* tail;
 
 public:
-student_Group();
-~student_Group();
+    student_Group();
+    ~student_Group();
 
-void addMember(student_member* member);
-std::string printGroup();
-bool  isEmpty();
-int size();
+    void addMember(student_member* member);
+    std::string printGroup();
+    bool isEmpty();
+    int size();
+
+    bool search(student_member* member);
+    bool remove(student_member* member);
+    void clear();
+    bool insertAfter(student_member* newMember, student_member* afterMember);
+    bool insertBefore(student_member* newMember, student_member* beforeMember);
 };
 
 #endif

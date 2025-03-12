@@ -19,15 +19,7 @@ student_Group::student_Group() : head(nullptr),
 tail(nullptr){}
 
 student_Group::~student_Group(){
-    memberNode* current = head;
-    while (current != nullptr)
-    {
-        memberNode* next = current->next;
-
-        delete current;
-        current = next;
-    }
-    
+    clear();
 }
 bool student_Group::isEmpty() {
     return head == nullptr;
@@ -73,4 +65,102 @@ std::string student_Group::printGroup(){
       index++;
     }
     return ss.str();
+}
+
+bool student_Group::search(student_member* member){
+    memberNode* current = head;
+    while (current != nullptr)
+    {
+      if(current->data == member){
+          return true;
+      }
+      current = current->next;
+    }
+    return false;
+}   
+
+bool student_Group::remove(student_member* member){
+if (!search(member)){
+    return false;
+} 
+
+memberNode* current = head;
+memberNode* previous = nullptr;
+
+while (current != nullptr && current->data != member)
+{
+    previous = current;
+    current = current->next;
+}
+
+if (current == nullptr){
+    return false;
+    
+}
+if (current == head){
+    head = head->next;
+    if (tail == current){
+        tail = nullptr;
+    }
+}
+else if(current == tail){
+    tail = previous;
+    previous->next = nullptr;
+}
+else{
+    previous->next = current->next;
+    
+}
+delete current;
+return true;
+}
+
+void student_Group::clear(){
+    memberNode* current = head;
+    while (current != nullptr)
+    {
+        memberNode* next = current->next;
+        delete current;
+        current = next;
+    }
+    head = nullptr;
+    tail = nullptr;
+}
+bool student_Group::insertAfter(student_member* newMember, student_member* afterMember){
+    if (!search(afterMember)){
+        return false;
+    }
+    memberNode* current = head;
+    while (current != nullptr && current->data != afterMember)
+    {
+        current = current->next;
+    }
+    memberNode* newNode = new memberNode(newMember);
+    newNode->next = current->next;
+    current->next = newNode;
+    if (current == tail){
+        tail = newNode;
+    }
+    return true;
+}
+
+bool student_Group::insertBefore(student_member* newMember, student_member* beforeMember){
+    if (!search(beforeMember)){
+        return false;
+    }
+   if (head->data == beforeMember){
+       memberNode* newNode = new memberNode(newMember);
+       newNode->next = head;
+       head = newNode;
+       return true;
+   }
+    memberNode* current = head;
+    while (current->next != nullptr && current->next->data != beforeMember)
+    {
+        current = current->next;
+    }
+    memberNode* newNode = new memberNode(newMember);
+    newNode->next = current->next;
+    current->next = newNode;
+    return true;
 }
